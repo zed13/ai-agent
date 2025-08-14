@@ -1,3 +1,5 @@
 MAX_CHARS = 10_000
 
 EXECUTION_TIMEOUT = 30
+
+WORKING_DIR = "calculator"
