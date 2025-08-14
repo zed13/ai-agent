@@ -1,4 +1,5 @@
 import os
+from google.genai import types
 import subprocess
 import config
 
@@ -46,3 +47,27 @@ def escape_args(args):
        else:
            processed.append(arg)
    return args
+
+
+schema_run_python = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Runs python script with specified arguments, constrained to the working directory. Excecution timeout for script is 30 seconds",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="Path to the file, relative to the working directory.",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                min_items=0,
+                max_items=20,
+                items=types.Schema(
+                    type=types.Type.STRING,
+                ),
+                description="Array of arguments for script to run. Could be empty array if no args required.",
+            )
+        },
+    ),
+)
